@@ -20,6 +20,7 @@ package services
 import akka.event.slf4j.Logger
 import securesocial.core._
 import securesocial.core.providers.Token
+import models.Tables.{Users, Tokens}
 
 
 /**
@@ -28,26 +29,23 @@ import securesocial.core.providers.Token
  * IMPORTANT: This is just a sample and not suitable for a production environment since
  * it stores everything in memory.
  */
-class InMemoryUserService extends UserService {
+class InMemoryUserService(app: play.api.Application) extends UserServicePlugin(app) {
   val logger = Logger("application.controllers.InMemoryUserService")
-  val userDB = 
+  val users = models.User
 
-  override def find(id: IdentityId): Option[Identity] = {
+  override def find(id: IdentityId): Option[Identity] = Users.findByIdentityId(id)
 
+  override def findByEmailAndProvider(email: String, providerId: String): Option[Identity] = Users.findByEmailAndProvider(email, providerId)
 
-  }
+  override def deleteToken(uuid: String): Unit = Tokens.delete(uuid)
 
-  override def findByEmailAndProvider(email: String, providerId: String): Option[Identity] = ???
+  override def save(user: Identity): Identity = Users.save(user)
 
-  override def deleteToken(uuid: String): Unit = ???
+  override def save(token: Token): Unit = Tokens.save(token)
 
-  override def save(user: Identity): Identity = ???
+  override def findToken(token: String): Option[Token] = Tokens.findById(token)
 
-  override def save(token: Token): Unit = ???
-
-  override def findToken(token: String): Option[Token] = ???
-
-  override def deleteExpiredTokens(): Unit = ???
+  override def deleteExpiredTokens(): Unit = Tokens.deleteExpiredTokens()
 }
 
 

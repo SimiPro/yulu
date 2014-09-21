@@ -9,7 +9,7 @@ import scala.slick.model.Model
 
 /**
  * Created by simipro on 9/14/14.
- */
+
 
 
 case class Id[T](id: Long) {
@@ -52,3 +52,4 @@ object Id {
     override def unbind(key: String, id: Id[T]): String = id.id.toString
   }
 }
+ */

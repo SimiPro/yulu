@@ -1,5 +1,5 @@
-GET     /navigation                 controllers.users.Users.navigation
-GET     /get-users                  controllers.users.Users.getUsers
+GET     /navigation                 controllers.users.Login.navigation
+GET     /get-users                  controllers.users.Login.getUsers
 
 
 #login page

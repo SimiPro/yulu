@@ -1,16 +1,16 @@
 package controllers.users
 
-import models.UserDb
+
 import models.web.{Navigation, NavigationItem, NavigationMenu}
 import play.api.mvc.Controller
 import play.api.libs.json._
 import securesocial.core._
 import play.api.libs.functional.syntax._
+import models.{Tables, User}
 
 
-
-abstract class Users extends Controller with SecureSocial {
-  val userDb:UserDb = new UserDb() // plugin appropriate implementation
+abstract class LoginController extends Controller with SecureSocial {
+  //val userDb:UserDb = new UserDb() // plugin appropriate implementation
 
 
   implicit val authenticationMethodFormat = Json.format[AuthenticationMethod]
@@ -19,7 +19,8 @@ abstract class Users extends Controller with SecureSocial {
   implicit val oAuth2InfoFormat = Json.format[OAuth2Info]
   implicit val passwordInfoFormat = Json.format[PasswordInfo]
   implicit val socialUserJsonFormat = (
-    (__ \ 'identityId).format[IdentityId] and
+    (__ \ 'uid).formatNullable[Long] and
+      (__ \ 'identityId).format[IdentityId] and
       (__ \ 'firstName).format[String] and
       (__ \ 'lastName).format[String] and
       (__ \ 'fullName).format[String] and
@@ -29,7 +30,8 @@ abstract class Users extends Controller with SecureSocial {
       (__ \ 'oAuth1Info).formatNullable[OAuth1Info] and
       (__ \ 'oAuth2Info).formatNullable[OAuth2Info] and
       (__ \ 'passwordInfo).formatNullable[PasswordInfo]
-    )(SocialUser.apply(
+    )(User.apply(
+    _: Option[Long],
     _: IdentityId,
     _: String,
     _: String,
@@ -40,10 +42,14 @@ abstract class Users extends Controller with SecureSocial {
     _: Option[OAuth1Info],
     _: Option[OAuth2Info],
     _: Option[PasswordInfo]
-  ), unlift(SocialUser.unapply))
+  ), unlift(User.unapply))
 
+
+}
+
+object Login extends LoginController {
   def getUsers = SecuredAction {
-    val allUsers: List[SocialUser] = userDb.findAll
+    val allUsers = Tables.Users.all
     Ok(Json.toJson(allUsers))
   }
 
@@ -60,5 +66,4 @@ abstract class Users extends Controller with SecureSocial {
     val navigation = Navigation("default", menus)
     Ok(Navigation.toJson(navigation))
   }
-
 }
