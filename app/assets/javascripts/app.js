@@ -3,10 +3,11 @@ requirejs([
   'angular',
   'angular-route',
   'angular-resource',
-  '/web/vassets/javascripts/web-app.js'],
+  '/web/vassets/javascripts/web-app.js',
+  '/users/vassets/javascripts/user-module.js'],
 function   (angular) {
 
-    var yulu = angular.module('yulu', ['ngResource','ngRoute','web']);
+    var yulu = angular.module('yulu', ['ngResource','ngRoute','web','user']);
     yulu.factory('navigation', function($resource){
       return $resource('navigation');
     });

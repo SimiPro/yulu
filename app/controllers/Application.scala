@@ -5,6 +5,8 @@ import play.api.mvc.{Action, Controller}
 
 
 object Application extends Controller {
+
+
   def index = Action {
     Ok(views.html.index())
   }
@@ -26,4 +28,4 @@ object Application extends Controller {
     Ok(Navigation.toJson(navigation))
   }
 
- }
+}
