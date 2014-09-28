@@ -3,6 +3,18 @@
  define(['angular'], function(angular) {
  	var web = angular.module('web',['ngResource', 'ngRoute']);
 
+  web.directive('yuluSubmit', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        value: '@',
+        class: '@'
+      },
+      templateUrl: 'web/vassets/partials/submit.tpl.html'
+
+    };
+  });
+
  	web.directive('yuluHeader', function() {
       return {
         restrict: 'E',
@@ -17,7 +29,8 @@
         templateUrl: 'web/vassets/partials/header.tpl.html'
       };
     });
-    return web.directive('yuluNav', function() {
+  
+  web.directive('yuluNav', function() {
       return {
         restrict: 'E',
         scope: {
@@ -32,4 +45,21 @@
         }
       };
     });
+
+  web.directive('yuluInput', function() {
+    return {
+      restrict: 'E',
+      replace: 'true',
+      scope: {
+        name: '@',
+        model: '=',
+        type: '@',
+        value: '@',
+        required: '@',
+        errors: "="
+      },
+      templateUrl: 'web/vassets/partials/input.tpl.html'
+    }
+  });
+
  });

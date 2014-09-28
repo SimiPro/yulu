@@ -1,26 +1,29 @@
-GET     /navigation                 controllers.users.Login.navigation
-GET     /get-users                  controllers.users.Login.getUsers
+GET     /navigation                 @controllers.users.LoginController.navigation
+GET     /get-users                  @controllers.users.LoginController.getUsers
 
 
 #login page
-GET     /login                      securesocial.controllers.LoginPage.login
-GET     /logout                     securesocial.controllers.LoginPage.logout
+GET     /login                      @controllers.users.LoginController.login
+GET     /logout                     @controllers.users.LoginController.logout
+
+
+
 
 # User Registration and password handling
-GET         /signup                        securesocial.controllers.Registration.startSignUp
-POST        /signup                        securesocial.controllers.Registration.handleStartSignUp
-GET         /signup/:token                 securesocial.controllers.Registration.signUp(token)
-POST        /signup/:token                 securesocial.controllers.Registration.handleSignUp(token)
-GET         /password/reset                securesocial.controllers.Registration.startResetPassword
-POST        /password/reset                securesocial.controllers.Registration.handleStartResetPassword
-GET         /password/reset/:token         securesocial.controllers.Registration.resetPassword(token)
-POST        /password/reset/:token         securesocial.controllers.Registration.handleResetPassword(token)
-GET         /password/change               securesocial.controllers.PasswordChange.page
-POST        /password/change               securesocial.controllers.PasswordChange.handlePasswordChange
+GET         /signup                        @securesocial.controllers.Registration.startSignUp
+POST        /signup                        @securesocial.controllers.Registration.handleStartSignUp
+#GET         /signup/:token                 securesocial.controllers.Registration.signUp(token)
+#POST        /signup/:token                 securesocial.controllers.Registration.handleSignUp(token)
+#GET         /password/reset                securesocial.controllers.Registration.startResetPassword
+#POST        /password/reset                securesocial.controllers.Registration.handleStartResetPassword
+#GET         /password/reset/:token         securesocial.controllers.Registration.resetPassword(token)
+#POST        /password/reset/:token         securesocial.controllers.Registration.handleResetPassword(token)
+#GET         /password/change               securesocial.controllers.PasswordChange.page
+#POST        /password/change               securesocial.controllers.PasswordChange.handlePasswordChange
 
 # Providers entry points
-POST        /authenticate/:provider        securesocial.controllers.ProviderController.authenticateByPost(provider)
-GET         /not-authorized                securesocial.controllers.ProviderController.notAuthorized
+#POST        /authenticate/:provider        securesocial.controllers.ProviderController.authenticateByPost(provider)
+#GET         /not-authorized                securesocial.controllers.ProviderController.notAuthorized
 
 #make app public
 GET         /vassets/*file                 controllers.Assets.versioned(path="/public/users", file: Asset)

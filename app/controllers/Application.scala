@@ -1,10 +1,13 @@
 package controllers
 
 import models.web.{Navigation, NavigationItem, NavigationMenu}
-import play.api.mvc.{Action, Controller}
+import play.api.Logger
+import play.api.mvc.{Action}
+import securesocial.core.{RuntimeEnvironment, SecureSocial}
 
+import scala.slick.profile.BasicProfile
 
-object Application extends Controller {
+class Application(override implicit val env: RuntimeEnvironment[BasicProfile]) extends  SecureSocial[BasicProfile]{
 
 
   def index = Action {
